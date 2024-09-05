@@ -1,5 +1,5 @@
 import customtkinter as ctk
-
+from tkinter import Frame
 # Constants
 DEFAULT_TIMER = 1800
 
@@ -19,8 +19,10 @@ def timer_toggle():
     if running:
         button.configure(text="Pause")
         update_timer()
+        timer_label.configure(text_color="#adff2f")
     else:
         button.configure(text="Start")
+        timer_label.configure(text_color="white")
         if timer_job:
             root.after_cancel(timer_job)
 
@@ -31,6 +33,7 @@ def reset_timer():
     timer_in_seconds = DEFAULT_TIMER
     running = False
     update_timer_display(timer_in_seconds)
+    timer_label.configure(text_color="white")
     button.configure(text="Start")
 
 
@@ -65,22 +68,23 @@ root.title("Pomodoro App")
 root.geometry("300x300")
 root.resizable(0, 0)
 
-# Layout configuration
-for i in range(3):
-    root.columnconfigure(i, weight=1)
-root.rowconfigure(1, weight=1)
+# Add Frame
+bottom = Frame(root, background="#26242f")
+bottom.pack(side="bottom", fill="both", expand=True)
 
 # Timer Label
-timer_label = ctk.CTkLabel(root, text=resolve_time_to_string(timer_in_seconds), font=(None, 40))
-timer_label.grid(row=1, column=1, padx=0, pady=0)
+timer_label = ctk.CTkLabel(root, text=resolve_time_to_string(timer_in_seconds), font=(None, 48))
+timer_label.pack(side="top", anchor="center", pady=100)
 
 # Start/Pause Button
-button = ctk.CTkButton(root, text="Start", command=timer_toggle, corner_radius=0)
-button.grid(row=2, column=1, padx=5, pady=0)
+button = ctk.CTkButton(bottom, text="Start", command=timer_toggle, corner_radius=0)
+button.pack(side="left", fill="both")
 
 # Reset Button
-button_reset = ctk.CTkButton(root, text="Reset", command=reset_timer, corner_radius=0, hover_color="red")
-button_reset.grid(row=3, column=1, pady=10)
+button_reset = ctk.CTkButton(bottom, text="Reset", command=reset_timer, corner_radius=0, fg_color="#AA0000", hover_color="red")
+button_reset.pack(side="right", fill="both")
+
+
 
 # Start the Tkinter event loop
 root.mainloop()
