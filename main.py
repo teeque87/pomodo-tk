@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import Frame
+
 # Constants
 DEFAULT_TIMER = 1800
 
@@ -83,8 +84,6 @@ button.pack(side="left", fill="both")
 # Reset Button
 button_reset = ctk.CTkButton(bottom, text="Reset", command=reset_timer, corner_radius=0, fg_color="#AA0000", hover_color="red")
 button_reset.pack(side="right", fill="both")
-
-
 
 # Start the Tkinter event loop
 root.mainloop()
